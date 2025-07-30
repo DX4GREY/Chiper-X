@@ -1,5 +1,4 @@
-import argparse
-import os
+import argparse, os, traceback
 from crypt_tools.crypt import (
     encrypt_file, decrypt_file,
     EncryptionError, DecryptionError,
@@ -78,13 +77,13 @@ def process_directory(input_dir: str, key: str, pattern: list[str] = None, metho
                 print(f"Failed to process {in_path}: {e}")
 
 def main():
-    parser = argparse.ArgumentParser(description="xor-tool: file encrypter/decrypter using XOR, AES, Vigenère, RC4, or ViChaos.")
+    parser = argparse.ArgumentParser(description="Chiper-X: file encrypter/decrypter using XOR, AES, Vigenère, RC4, or ViChaos.")
     parser.add_argument("mode", choices=["encrypt", "decrypt"], help="Mode: encrypt or decrypt")
     parser.add_argument("input", help="Input file or directory")
     parser.add_argument("output", nargs='?', help="Output file (for single file only)")
     parser.add_argument("--key", help="Encryption key (string)")
     parser.add_argument("--method", choices=["xor", "aes", "vigenere", "rc4", "vichaos"], help="Encryption method")
-    parser.add_argument("--pattern", help="Pattern file path (e.g., xor-tool.patt)")
+    parser.add_argument("--pattern", help="Pattern file path (e.g., chiper-x.pattern)")
 
     args = parser.parse_args()
 
@@ -124,8 +123,9 @@ def main():
                 
         print(f"{args.mode.title()}ion complete: {output_file}")
 
-    except (EncryptionError, DecryptionError, Exception) as e:
+    except (EncryptionError, DecryptionError, Exception, ValueError) as e:
         print(f"Error: {e}")
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main()

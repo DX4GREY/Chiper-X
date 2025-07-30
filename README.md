@@ -1,11 +1,11 @@
-## 🔐 xor-tool (by Dx4Grey)
+## 🔐 Chiper-X (by Dx4Grey)
 
-## 📄 Description
+## Description
 
-**xor-tool** is a CLI utility to encrypt or decrypt **files or entire directories** using:
+**Chiper-X** is a CLI utility to encrypt or decrypt **files or entire directories** using:
 
 * **XOR** cipher (lightweight)
-* **AES-CBC** (via `pycryptodome`)
+* **AES-CBC**
 * **Vigenère**
 * **RC4**
 * **ViChaos** (custom layered algorithm with pseudo-chaotic transformation)
@@ -13,10 +13,10 @@
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ```
-xor-tool [encrypt|decrypt] <input> [output] 
+chiper-x [encrypt|decrypt] <input> [output] 
          [--key YOUR_KEY]
          [--method xor|aes|vigenere|rc4|vichaos]
          [--pattern pattern.txt]
@@ -28,7 +28,7 @@ xor-tool [encrypt|decrypt] <input> [output]
 
 ---
 
-## ⚙️ Options
+## Options
 
 | Option      | Description                                                                             |
 | ----------- | --------------------------------------------------------------------------------------- |
@@ -38,7 +38,7 @@ xor-tool [encrypt|decrypt] <input> [output]
 
 ---
 
-## 🔄 Supported Methods
+## Supported Methods
 
 | Symbol | Method   |
 | ------ | -------- |
@@ -48,22 +48,22 @@ xor-tool [encrypt|decrypt] <input> [output]
 | `R`    | RC4      |
 | `C`    | ViChaos  |
 
-> 🧠 `C` = ViChaos (word from "chaos")
+> `C` = ViChaos (word from "chaos")
 
 ---
 
-## 🧪 Examples
+## Examples
 
 ### XOR Encryption (Single File)
 
 ```
-xor-tool encrypt secret.txt secret.enc --key hello123 --method xor
+chiper-x encrypt secret.txt secret.enc --key hello123 --method xor
 ```
 
 ### ViChaos Encryption
 
 ```
-xor-tool encrypt file.txt file.enc --key mychaoskey --method vichaos
+chiper-x encrypt file.txt file.enc --key mychaoskey --method vichaos
 ```
 
 ### Pattern-Based Encryption
@@ -77,26 +77,26 @@ superkey:AXVRC
 Encrypt with layered methods:
 
 ```
-xor-tool encrypt input.txt encrypted.bin --pattern pattern.txt
+chiper-x encrypt input.txt encrypted.bin --pattern pattern.txt
 ```
 
 And decrypt:
 
 ```
-xor-tool decrypt encrypted.bin --pattern pattern.txt
+chiper-x decrypt encrypted.bin --pattern pattern.txt
 ```
 
 ### Directory Encryption
 
 ```
-xor-tool encrypt myfolder --key topsecret --method vichaos
+chiper-x encrypt myfolder --key topsecret --method vichaos
 ```
 
 Will encrypt all files and save to `myfolder/` (overwritten structure).
 
 ---
 
-## 📝 Notes
+## Notes
 
 * If `--pattern` is used, `--key` and `--method` are **ignored**
 * AES uses CBC mode with a random IV prepended to the file
@@ -110,17 +110,12 @@ Will encrypt all files and save to `myfolder/` (overwritten structure).
 
 ---
 
-## 🔧 Requirements
+## Requirements
 
 * Python 3.6+
-* `pycryptodome` (for AES support):
-
-```bash
-pip install pycryptodome
-```
 
 ---
 
-## 🔗 License
+## License
 
-MIT — free to use, modify, and share 🙌
+MIT — free to use, modify, and share.
