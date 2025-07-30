@@ -4,9 +4,9 @@ setup(
     name='xor-tool',
     version='1.0.0',
     description='Simple CLI tool for file encryption using XOR and AES (with pattern support)',
-    author='Awang & Joni',
-    author_email='dx4grey@example.com',  # Ganti email kalau mau
-    url='https://github.com/DX4GREY/xor-tool',  # Ganti URL repo kamu
+    author='Dx4Grey',
+    author_email='dxablack@gmail.com',  # Ganti email kalau mau
+    url='https://github.com/DX4GREY/xor-tools',  # Ganti URL repo kamu
     packages=find_packages(),
     py_modules=['xor_tool'],  # Nama file utama lo, misal xor_tool.py
     entry_points={
