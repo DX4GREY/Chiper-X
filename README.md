@@ -9,7 +9,7 @@
 * **Vigenère**
 * **RC4**
 * **ViChaos** (custom layered algorithm with pseudo-chaotic transformation)
-* Or a **custom pattern** like `AXVRV` combining multiple algorithms in sequence — ideal for testing layered encryption approaches.
+* Or a **custom pattern** like `AXVRC` combining multiple algorithms in sequence — ideal for testing layered encryption approaches.
 
 ---
 
@@ -34,7 +34,7 @@ xor-tool [encrypt|decrypt] <input> [output]
 | ----------- | --------------------------------------------------------------------------------------- |
 | `--key`     | Required (unless using `--pattern`). The encryption key as a string.                    |
 | `--method`  | One of: `xor`, `aes`, `vigenere`, `rc4`, `vichaos`. Required if `--pattern` is not set. |
-| `--pattern` | Path to pattern file: `key:PATTERN` (e.g., `mykey:AXVR`)                                |
+| `--pattern` | Path to pattern file: `key:PATTERN` (e.g., `mykey:AXVRC`)                                |
 
 ---
 
@@ -46,9 +46,9 @@ xor-tool [encrypt|decrypt] <input> [output]
 | `X`    | XOR      |
 | `V`    | Vigenère |
 | `R`    | RC4      |
-| `H`    | ViChaos  |
+| `C`    | ViChaos  |
 
-> 🧠 `H` = ViChaos (dari kata "chaos")
+> 🧠 `C` = ViChaos (word from "chaos")
 
 ---
 
@@ -71,7 +71,7 @@ xor-tool encrypt file.txt file.enc --key mychaoskey --method vichaos
 Given `pattern.txt`:
 
 ```
-superkey:AXVRH
+superkey:AXVRC
 ```
 
 Encrypt with layered methods:
