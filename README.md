@@ -1,7 +1,3 @@
-Got it bro! Here's the markdown in English, casual style, and using `xor-tool` as the CLI command (no more `python xor-tool.py`):
-
----
-
 # xor-tool (by Awang & Joni) 🔐
 
 ## 📄 Description
