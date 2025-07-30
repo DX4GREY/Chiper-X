@@ -8,6 +8,7 @@ try:
 except ImportError:
     AES_AVAILABLE = False
 from crypt_tools.aes_cipher import encrypt_aes as pure_aes_encrypt, decrypt_aes as pure_aes_decrypt
+from crypt_tools.vichaos_chiper import vichaos_encrypt, vichaos_decrypt
 
 # ======================
 # === EXCEPTIONS ======
@@ -82,6 +83,8 @@ def encrypt_data(method: str, data: bytes | str, key: str) -> bytes:
         return vigenere_encrypt(data, key)
     elif method == 'rc4':
         return rc4_crypt(data, key)
+    elif method == 'vichaos':
+        return vichaos_encrypt(data, key)
     else:
         raise EncryptionError(f"Unsupported encryption method: {method}")
 
@@ -96,6 +99,8 @@ def decrypt_data(method: str, data: bytes, key: str) -> bytes:
         return vigenere_decrypt(data, key)
     elif method == 'rc4':
         return rc4_crypt(data, key)
+    elif method == 'vichaos':
+        return vichaos_decrypt(data, key)
     else:
         raise DecryptionError(f"Unsupported decryption method: {method}")
 

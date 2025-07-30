@@ -27,6 +27,8 @@ def encrypt_with_pattern(data: bytes, pattern: list[str], key: str) -> bytes:
             data = encrypt_data('vigenere', data, key)
         elif method == 'R':
             data = encrypt_data('rc4', data, key)
+        elif method == 'C':
+            data = encrypt_data('vichaos', data, key)
         else:
             raise EncryptionError(f"Unknown pattern method: {method}")
     return data
@@ -41,6 +43,8 @@ def decrypt_with_pattern(data: bytes, pattern: list[str], key: str) -> bytes:
             data = decrypt_data('vigenere', data, key)
         elif method == 'R':
             data = decrypt_data('rc4', data, key)
+        elif method == 'C':
+            data = decrypt_data('vichaos', data, key)
         else:
             raise DecryptionError(f"Unknown pattern method: {method}")
     return data
@@ -74,12 +78,12 @@ def process_directory(input_dir: str, key: str, pattern: list[str] = None, metho
                 print(f"Failed to process {in_path}: {e}")
 
 def main():
-    parser = argparse.ArgumentParser(description="xor-tool: file encrypter/decrypter using XOR, AES, Vigenère, or RC4.")
+    parser = argparse.ArgumentParser(description="xor-tool: file encrypter/decrypter using XOR, AES, Vigenère, RC4, or ViChaos.")
     parser.add_argument("mode", choices=["encrypt", "decrypt"], help="Mode: encrypt or decrypt")
     parser.add_argument("input", help="Input file or directory")
     parser.add_argument("output", nargs='?', help="Output file (for single file only)")
     parser.add_argument("--key", help="Encryption key (string)")
-    parser.add_argument("--method", choices=["xor", "aes", "vigenere", "rc4"], help="Encryption method")
+    parser.add_argument("--method", choices=["xor", "aes", "vigenere", "rc4", "vichaos"], help="Encryption method")
     parser.add_argument("--pattern", help="Pattern file path (e.g., xor-tool.patt)")
 
     args = parser.parse_args()

@@ -1,4 +1,4 @@
-# 🔐 xor-tool (by Dx4Grey)
+## 🔐 xor-tool (by Dx4Grey)
 
 ## 📄 Description
 
@@ -8,7 +8,8 @@
 * **AES-CBC** (via `pycryptodome`)
 * **Vigenère**
 * **RC4**
-* Or a **custom pattern** like `AXVR` combining multiple algorithms in sequence — ideal for testing layered encryption approaches.
+* **ViChaos** (custom layered algorithm with pseudo-chaotic transformation)
+* Or a **custom pattern** like `AXVRV` combining multiple algorithms in sequence — ideal for testing layered encryption approaches.
 
 ---
 
@@ -17,7 +18,7 @@
 ```
 xor-tool [encrypt|decrypt] <input> [output] 
          [--key YOUR_KEY]
-         [--method xor|aes|vigenere|rc4]
+         [--method xor|aes|vigenere|rc4|vichaos]
          [--pattern pattern.txt]
 ```
 
@@ -29,11 +30,11 @@ xor-tool [encrypt|decrypt] <input> [output]
 
 ## ⚙️ Options
 
-| Option      | Description                                                                  |
-| ----------- | ---------------------------------------------------------------------------- |
-| `--key`     | Required (unless using `--pattern`). The encryption key as a string.         |
-| `--method`  | One of: `xor`, `aes`, `vigenere`, `rc4`. Required if `--pattern` is not set. |
-| `--pattern` | Path to pattern file: `key:PATTERN` (e.g., `mykey:AXVR`)                     |
+| Option      | Description                                                                             |
+| ----------- | --------------------------------------------------------------------------------------- |
+| `--key`     | Required (unless using `--pattern`). The encryption key as a string.                    |
+| `--method`  | One of: `xor`, `aes`, `vigenere`, `rc4`, `vichaos`. Required if `--pattern` is not set. |
+| `--pattern` | Path to pattern file: `key:PATTERN` (e.g., `mykey:AXVR`)                                |
 
 ---
 
@@ -45,6 +46,9 @@ xor-tool [encrypt|decrypt] <input> [output]
 | `X`    | XOR      |
 | `V`    | Vigenère |
 | `R`    | RC4      |
+| `H`    | ViChaos  |
+
+> 🧠 `H` = ViChaos (dari kata "chaos")
 
 ---
 
@@ -56,16 +60,10 @@ xor-tool [encrypt|decrypt] <input> [output]
 xor-tool encrypt secret.txt secret.enc --key hello123 --method xor
 ```
 
-### XOR Decryption (Overwrite original)
+### ViChaos Encryption
 
 ```
-xor-tool decrypt secret.enc --key hello123 --method xor
-```
-
-### AES Encryption (requires `pycryptodome`)
-
-```
-xor-tool encrypt file.txt aes.enc --key securekey --method aes
+xor-tool encrypt file.txt file.enc --key mychaoskey --method vichaos
 ```
 
 ### Pattern-Based Encryption
@@ -73,7 +71,7 @@ xor-tool encrypt file.txt aes.enc --key securekey --method aes
 Given `pattern.txt`:
 
 ```
-superkey:AXVR
+superkey:AXVRH
 ```
 
 Encrypt with layered methods:
@@ -91,7 +89,7 @@ xor-tool decrypt encrypted.bin --pattern pattern.txt
 ### Directory Encryption
 
 ```
-xor-tool encrypt myfolder --key topsecret --method vigenere
+xor-tool encrypt myfolder --key topsecret --method vichaos
 ```
 
 Will encrypt all files and save to `myfolder/` (overwritten structure).
@@ -105,7 +103,7 @@ Will encrypt all files and save to `myfolder/` (overwritten structure).
 * Keys are padded/truncated depending on algorithm:
 
   * AES: 16–32 bytes
-  * XOR/Vigenère/RC4: no strict length
+  * XOR/Vigenère/RC4/ViChaos: no strict length
 * Directory input replicates folder structure in output
 * `--output` is **only valid for file input**, not directories
 * If `--output` is omitted for files, it will **overwrite input**
