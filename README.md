@@ -1,4 +1,4 @@
-# xor-tool (by Awang & Joni) 🔐
+# xor-tool (by Dx4Grey) 🔐
 
 ## 📄 Description
 
