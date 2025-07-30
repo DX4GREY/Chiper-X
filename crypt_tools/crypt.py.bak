@@ -1,13 +1,13 @@
 # crypt.py
 import os
 import base64
+
 try:
     from Crypto.Cipher import AES
     from Crypto.Util.Padding import pad, unpad
     AES_AVAILABLE = True
 except ImportError:
     AES_AVAILABLE = False
-from crypt_tools.aes_cipher import encrypt_aes as pure_aes_encrypt, decrypt_aes as pure_aes_decrypt
 
 # ======================
 # === EXCEPTIONS ======
@@ -22,22 +22,20 @@ def xor_bytes(data: bytes, key: bytes) -> bytes:
     return bytes([b ^ key[i % len(key)] for i, b in enumerate(data)])
 
 def aes_encrypt_bytes(data: bytes, key: str) -> bytes:
-    if AES_AVAILABLE:
-        key_bytes = key.encode().ljust(32, b'\0')[:32]
-        cipher = AES.new(key_bytes, AES.MODE_CBC)
-        ct_bytes = cipher.encrypt(pad(data, AES.block_size))
-        return cipher.iv + ct_bytes
-    else:
-        return pure_aes_encrypt(data, key)
+    if not AES_AVAILABLE:
+        raise ImportError("pycryptodome not installed, AES not available")
+    key_bytes = key.encode().ljust(32, b'\0')[:32]
+    cipher = AES.new(key_bytes, AES.MODE_CBC)
+    ct_bytes = cipher.encrypt(pad(data, AES.block_size))
+    return cipher.iv + ct_bytes
 
 def aes_decrypt_bytes(data: bytes, key: str) -> bytes:
-    if AES_AVAILABLE:
-        key_bytes = key.encode().ljust(32, b'\0')[:32]
-        iv, ct = data[:16], data[16:]
-        cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
-        return unpad(cipher.decrypt(ct), AES.block_size)
-    else:
-        return pure_aes_decrypt(data, key)
+    if not AES_AVAILABLE:
+        raise ImportError("pycryptodome not installed, AES not available")
+    key_bytes = key.encode().ljust(32, b'\0')[:32]
+    iv, ct = data[:16], data[16:]
+    cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
+    return unpad(cipher.decrypt(ct), AES.block_size)
 
 def vigenere_encrypt(data: bytes, key: str) -> bytes:
     key_bytes = key.encode()

@@ -5,6 +5,7 @@ from crypt_tools.crypt import (
     EncryptionError, DecryptionError,
     encrypt_data, decrypt_data
 )
+global output_file
 
 def parse_pattern_file(pattern_file: str) -> tuple[str, list[str]]:
     if not os.path.isfile(pattern_file):
@@ -22,6 +23,10 @@ def encrypt_with_pattern(data: bytes, pattern: list[str], key: str) -> bytes:
             data = encrypt_data('aes', data, key)
         elif method == 'X':
             data = encrypt_data('xor', data, key)
+        elif method == 'V':
+            data = encrypt_data('vigenere', data, key)
+        elif method == 'R':
+            data = encrypt_data('rc4', data, key)
         else:
             raise EncryptionError(f"Unknown pattern method: {method}")
     return data
@@ -32,6 +37,10 @@ def decrypt_with_pattern(data: bytes, pattern: list[str], key: str) -> bytes:
             data = decrypt_data('aes', data, key)
         elif method == 'X':
             data = decrypt_data('xor', data, key)
+        elif method == 'V':
+            data = decrypt_data('vigenere', data, key)
+        elif method == 'R':
+            data = decrypt_data('rc4', data, key)
         else:
             raise DecryptionError(f"Unknown pattern method: {method}")
     return data
@@ -65,12 +74,12 @@ def process_directory(input_dir: str, key: str, pattern: list[str] = None, metho
                 print(f"Failed to process {in_path}: {e}")
 
 def main():
-    parser = argparse.ArgumentParser(description="xor-tool: file encrypter/decrypter using XOR or AES.")
+    parser = argparse.ArgumentParser(description="xor-tool: file encrypter/decrypter using XOR, AES, Vigenère, or RC4.")
     parser.add_argument("mode", choices=["encrypt", "decrypt"], help="Mode: encrypt or decrypt")
     parser.add_argument("input", help="Input file or directory")
     parser.add_argument("output", nargs='?', help="Output file (for single file only)")
     parser.add_argument("--key", help="Encryption key (string)")
-    parser.add_argument("--method", choices=["xor", "aes"], help="Encryption method")
+    parser.add_argument("--method", choices=["xor", "aes", "vigenere", "rc4"], help="Encryption method")
     parser.add_argument("--pattern", help="Pattern file path (e.g., xor-tool.patt)")
 
     args = parser.parse_args()
@@ -90,23 +99,26 @@ def main():
         # File tunggal
         with open(args.input, 'rb') as f:
             data = f.read()
-
+        output_file = args.output if args.output else args.input
+        
         if args.pattern:
             key, pattern = parse_pattern_file(args.pattern)
             if args.mode == "encrypt":
                 result = encrypt_with_pattern(data, pattern, key)
             else:
                 result = decrypt_with_pattern(data, pattern, key)
-            with open(args.output, 'wb') as f:
+            with open(output_file, 'wb') as f:
                 f.write(result)
         else:
             if not args.key or not args.method:
                 raise ValueError("If --pattern not used, --key and --method are required")
+            
             if args.mode == "encrypt":
-                encrypt_file(args.method, args.input, args.output, args.key)
+                encrypt_file(args.method, args.input, output_file, args.key)
             else:
-                decrypt_file(args.method, args.input, args.output, args.key)
-        print(f"{args.mode.title()}ion complete: {args.output}")
+                decrypt_file(args.method, args.input, output_file, args.key)
+                
+        print(f"{args.mode.title()}ion complete: {output_file}")
 
     except (EncryptionError, DecryptionError, Exception) as e:
         print(f"Error: {e}")
