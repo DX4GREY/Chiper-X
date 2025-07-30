@@ -1,0 +1,38 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Encrypted & output files (optional)
+*.enc
+*.aes
+*.bin
+*.log
+*.tmp
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE/editor junk
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Test/coverage
+.coverage
+htmlcov/
+.tox/
+.cache/
+pytest_cache/
+
+# Pattern examples (optional)
+pattern.txt
