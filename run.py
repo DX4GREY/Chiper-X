@@ -288,8 +288,8 @@ def main():
         # File tunggal
         if args.input is None:
             parser.print_help()
-            print("Error: Input file required")
-            return
+            print("\nError: Input file or directory required")
+            return 1
 
         with open(args.input, 'rb') as f:
             data = f.read()
