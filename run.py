@@ -125,23 +125,27 @@ def main():
                 self.input_entry.grid(row=1, column=1, sticky="ew", padx=8)
                 tk.Button(self, text="Browse", command=self.browse_input).grid(row=1, column=2, padx=4)
 
-                # Output
-                tk.Label(self, text="Output file:").grid(row=2, column=0, sticky="w", padx=8)
+                # Output (will be hidden for directory input)
+                self.output_label = tk.Label(self, text="Output file:")
+                self.output_label.grid(row=2, column=0, sticky="w", padx=8)
                 self.output_entry = tk.Entry(self)
                 self.output_entry.grid(row=2, column=1, sticky="ew", padx=8)
-                tk.Button(self, text="Browse", command=self.browse_output).grid(row=2, column=2, padx=4)
+                self.output_browse_btn = tk.Button(self, text="Browse", command=self.browse_output)
+                self.output_browse_btn.grid(row=2, column=2, padx=4)
 
                 # Key
-                tk.Label(self, text="Key:").grid(row=3, column=0, sticky="w", padx=8)
+                self.key_label = tk.Label(self, text="Key:")
+                self.key_label.grid(row=3, column=0, sticky="w", padx=8)
                 self.key_entry = tk.Entry(self)
                 self.key_entry.grid(row=3, column=1, sticky="ew", padx=8)
 
                 # Method
-                tk.Label(self, text="Method:").grid(row=4, column=0, sticky="w", padx=8)
+                self.method_label = tk.Label(self, text="Method:")
+                self.method_label.grid(row=4, column=0, sticky="w", padx=8)
                 self.method_var = tk.StringVar()
-                method_menu = tk.OptionMenu(self, self.method_var, "xor", "aes", "vigenere", "rc4", "vichaos")
-                method_menu.grid(row=4, column=1, sticky="ew", padx=8)
-                method_menu.config(width=16)
+                self.method_menu = tk.OptionMenu(self, self.method_var, "xor", "aes", "vigenere", "rc4", "vichaos")
+                self.method_menu.grid(row=4, column=1, sticky="ew", padx=8)
+                self.method_menu.config(width=16)
 
                 # Pattern
                 tk.Label(self, text="Pattern file:").grid(row=5, column=0, sticky="w", padx=8)
@@ -158,11 +162,23 @@ def main():
                     self.grid_rowconfigure(i, weight=1)
                 self.grid_columnconfigure(1, weight=1)
 
+                # Bind input entry change to check if it's a directory
+                self.input_entry.bind("<FocusOut>", self.check_input_type)
+                self.input_entry.bind("<KeyRelease>", self.check_input_type)
+
+                # Bind pattern entry change to hide/show key and method
+                self.pattern_entry.bind("<FocusOut>", self.check_pattern_selected)
+                self.pattern_entry.bind("<KeyRelease>", self.check_pattern_selected)
+
             def browse_input(self):
-                path = filedialog.askopenfilename() or filedialog.askdirectory()
+                # Use askopenfilename first, if cancelled, then askdirectory
+                path = filedialog.askopenfilename()
+                if not path:
+                    path = filedialog.askdirectory()
                 if path:
                     self.input_entry.delete(0, tk.END)
                     self.input_entry.insert(0, path)
+                    self.check_input_type()
 
             def browse_output(self):
                 path = filedialog.asksaveasfilename()
@@ -175,6 +191,31 @@ def main():
                 if path:
                     self.pattern_entry.delete(0, tk.END)
                     self.pattern_entry.insert(0, path)
+                    self.check_pattern_selected()
+
+            def check_input_type(self, event=None):
+                input_path = self.input_entry.get()
+                if os.path.isdir(input_path) and input_path:
+                    self.output_entry.grid_remove()
+                    self.output_browse_btn.grid_remove()
+                    self.output_label.grid_remove()
+                else:
+                    self.output_entry.grid()
+                    self.output_browse_btn.grid()
+                    self.output_label.grid()
+
+            def check_pattern_selected(self, event=None):
+                pattern_path = self.pattern_entry.get()
+                if pattern_path.strip():
+                    self.key_label.grid_remove()
+                    self.key_entry.grid_remove()
+                    self.method_label.grid_remove()
+                    self.method_menu.grid_remove()
+                else:
+                    self.key_label.grid()
+                    self.key_entry.grid()
+                    self.method_label.grid()
+                    self.method_menu.grid()
 
             def run_chiperx(self):
 
