@@ -14,7 +14,9 @@ setup(
             'chiper-x=run:main',
         ],
     },
-    install_requires=[],
+    install_requires=[
+        'tkinter',  # Tkinter untuk GUI
+    ],
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
