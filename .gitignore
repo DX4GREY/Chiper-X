@@ -36,3 +36,4 @@ pytest_cache/
 
 # Pattern examples (optional)
 pattern.txt
+test/
