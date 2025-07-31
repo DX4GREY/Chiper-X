@@ -1,4 +1,4 @@
-RC4_MAGIC = b"RC4"
+RC4_MAGIC = b"RC4Head"
 
 class DecryptionError(Exception):
     pass

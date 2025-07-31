@@ -1,5 +1,5 @@
 import os
-from .xor import xor_bytes
+from .xor import xor_encrypt, xor_decrypt
 from .aes import aes_encrypt_cbc, aes_decrypt_cbc
 from .vigenere import vigenere_encrypt, vigenere_decrypt
 from .rc4 import rc4_encrypt, rc4_decrypt, DecryptionError as RC4DecryptionError
@@ -14,7 +14,7 @@ class DecryptionError(Exception):
 def encrypt_data(method: str, data: bytes, key: str) -> bytes:
     try:
         if method == 'xor':
-            return xor_bytes(data, key.encode())
+            return xor_encrypt(data, key.encode())
         elif method == 'aes':
             return aes_encrypt_cbc(data, key)
         elif method == 'vigenere':
@@ -31,7 +31,7 @@ def encrypt_data(method: str, data: bytes, key: str) -> bytes:
 def decrypt_data(method: str, data: bytes, key: str) -> bytes:
     try:
         if method == 'xor':
-            return xor_bytes(data, key.encode())
+            return xor_decrypt(data, key.encode())
         elif method == 'aes':
             return aes_decrypt_cbc(data, key)
         elif method == 'vigenere':
