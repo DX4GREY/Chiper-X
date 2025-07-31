@@ -1,5 +1,5 @@
 import argparse, os, traceback
-from crypt_tools.crypt import (
+from chiperx.crypt import (
     encrypt_file, decrypt_file,
     EncryptionError, DecryptionError,
     encrypt_data, decrypt_data
