@@ -274,7 +274,7 @@ def main():
         return
 
     try:
-        if os.path.isdir(args.input):
+        if args.input is not None and os.path.isdir(args.input):
             if args.pattern:
                 key, pattern = parse_pattern_file(args.pattern)
                 process_directory(args.input, key, pattern=pattern, mode=args.mode)
@@ -286,6 +286,11 @@ def main():
             return
 
         # File tunggal
+        if args.input is None:
+            parser.print_help()
+            print("Error: Input file required")
+            return
+
         with open(args.input, 'rb') as f:
             data = f.read()
         output_file = args.output if args.output else args.input
