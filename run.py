@@ -56,7 +56,7 @@ def decrypt_with_pattern(data: bytes, pattern: list[str], key: str) -> bytes:
     return data
 
 def process_directory(input_dir: str, key: str, pattern: list[str] = None, method: str = None, mode: str = "encrypt"):
-    output_root = f"{os.path.basename(os.path.abspath(input_dir))}"
+    output_root = os.path.abspath(input_dir)
     for root, _, files in os.walk(input_dir):
         for file in files:
             in_path = os.path.join(root, file)
