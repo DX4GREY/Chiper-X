@@ -15,7 +15,7 @@ setup(
         ],
     },
     install_requires=[
-        'tkinter',  # Tkinter untuk GUI
+        # 'tkinter',  # Tkinter untuk GUI
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
