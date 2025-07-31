@@ -11,7 +11,6 @@ def xor_bytes(data: bytes, key: bytes) -> bytes:
 def xor_encrypt(data: bytes, key: bytes) -> bytes:
     if not key or len(key) == 0:
         raise ValueError("Key must not be empty.")
-    header = b'XORX'
     checksum = hashlib.sha256(data).digest()[:8]  # 8 bytes checksum
     encrypted = xor_bytes(header + checksum + data, key)
     return encrypted
