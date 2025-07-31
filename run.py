@@ -31,6 +31,8 @@ def encrypt_with_pattern(data: bytes, pattern: list[str], key: str) -> bytes:
             data = encrypt_data('rc4', data, key)
         elif method == 'C':
             data = encrypt_data('vichaos', data, key)
+        elif method == 'S':
+            data = encrypt_data('vichaos_secure', data, key)
         else:
             raise EncryptionError(f"Unknown pattern method: {method}")
     return data
@@ -47,6 +49,8 @@ def decrypt_with_pattern(data: bytes, pattern: list[str], key: str) -> bytes:
             data = decrypt_data('rc4', data, key)
         elif method == 'C':
             data = decrypt_data('vichaos', data, key)
+        elif method == 'S':
+            data = decrypt_data('vichaos_secure', data, key)
         else:
             raise DecryptionError(f"Unknown pattern method: {method}")
     return data
@@ -80,12 +84,12 @@ def process_directory(input_dir: str, key: str, pattern: list[str] = None, metho
                 print(f"Failed to process {in_path}: {e}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Chiper-X: file encrypter/decrypter using XOR, AES, Vigenère, RC4, or ViChaos.")
+    parser = argparse.ArgumentParser(description="Chiper-X: file encrypter/decrypter using XOR, AES, Vigenère, RC4, ViChaos, or ViChaos Secure.")
     parser.add_argument("mode", choices=["encrypt", "decrypt"], nargs='?', help="Mode: encrypt or decrypt")
     parser.add_argument("input", nargs='?', help="Input file or directory")
     parser.add_argument("output", nargs='?', help="Output file (for single file only)")
     parser.add_argument("--key", help="Encryption key (string)")
-    parser.add_argument("--method", choices=["xor", "aes", "vigenere", "rc4", "vichaos"], help="Encryption method")
+    parser.add_argument("--method", choices=["xor", "aes", "vigenere", "rc4", "vichaos", "vichaos_secure"], help="Encryption method")
     parser.add_argument("--pattern", help="Pattern file path (e.g., chiper-x.pattern)")
     parser.add_argument("--gui", action="store_true", help="Show Chiper-X GUI")
 
@@ -143,7 +147,7 @@ def main():
                 self.method_label = tk.Label(self, text="Method:")
                 self.method_label.grid(row=4, column=0, sticky="w", padx=8)
                 self.method_var = tk.StringVar()
-                self.method_menu = tk.OptionMenu(self, self.method_var, "xor", "aes", "vigenere", "rc4", "vichaos")
+                self.method_menu = tk.OptionMenu(self, self.method_var, "xor", "aes", "vigenere", "rc4", "vichaos", "vichaos_secure")
                 self.method_menu.grid(row=4, column=1, sticky="ew", padx=8)
                 self.method_menu.config(width=16)
 

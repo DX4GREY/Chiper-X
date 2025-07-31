@@ -4,7 +4,7 @@ from .aes import aes_encrypt_cbc, aes_decrypt_cbc
 from .vigenere import vigenere_encrypt, vigenere_decrypt
 from .rc4 import rc4_encrypt, rc4_decrypt, DecryptionError as RC4DecryptionError
 from .vichaos import vichaos_encrypt, vichaos_decrypt
-
+from .vichaos_secure import vichaos_secure_encrypt, vichaos_secure_decrypt
 class EncryptionError(Exception):
     pass
 
@@ -23,6 +23,8 @@ def encrypt_data(method: str, data: bytes, key: str) -> bytes:
             return rc4_encrypt(data, key)
         elif method == 'vichaos':
             return vichaos_encrypt(data, key)
+        elif method == 'vichaos_secure':
+            return vichaos_secure_encrypt(data, key)
         else:
             raise EncryptionError(f"Unknown method: {method}")
     except Exception as e:
@@ -40,6 +42,8 @@ def decrypt_data(method: str, data: bytes, key: str) -> bytes:
             return rc4_decrypt(data, key)
         elif method == 'vichaos':
             return vichaos_decrypt(data, key)
+        elif method == 'vichaos_secure':
+            return vichaos_secure_decrypt(data, key)
         else:
             raise DecryptionError(f"Unknown method: {method}")
     except (ValueError, RC4DecryptionError) as e:
