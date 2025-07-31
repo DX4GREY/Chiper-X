@@ -19,7 +19,6 @@ def xor_decrypt(encrypted: bytes, key: bytes) -> bytes:
     if not key or len(key) == 0:
         raise ValueError("Key must not be empty.")
     decrypted = xor_bytes(encrypted, key)
-    header = b'XORX'
     if not decrypted.startswith(header):
         raise ValueError("Invalid key or corrupted data.")
     if len(decrypted) < len(header) + 8:
