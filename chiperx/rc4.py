@@ -7,10 +7,11 @@ def rc4_encrypt(data: bytes, key: str) -> bytes:
     return RC4_MAGIC + _rc4_core(data, key)
 
 def rc4_decrypt(data: bytes, key: str) -> bytes:
-    decrypted = _rc4_core(data, key)
-    if not decrypted.startswith(RC4_MAGIC):
+    if not data.startswith(RC4_MAGIC):
         raise DecryptionError("RC4: Invalid key or corrupted data")
-    return decrypted[len(RC4_MAGIC):]
+    encrypted = data[len(RC4_MAGIC):]
+    decrypted = _rc4_core(encrypted, key)
+    return decrypted
 
 def _rc4_core(data: bytes, key: str) -> bytes:
     S = list(range(256))
