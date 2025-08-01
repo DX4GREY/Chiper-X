@@ -57,7 +57,7 @@ class ChiperXGUI(tk.Tk):
         # Method
         self.method_label = tk.Label(self, text="Method:")
         self.method_label.grid(row=4, column=0, sticky="w", padx=8)
-        self.method_var = tk.StringVar()
+        self.method_var = tk.StringVar(value="vichaos_secure")
         self.method_menu = tk.OptionMenu(self, self.method_var, "xor", "aes", "vigenere", "rc4", "vichaos", "vichaos_secure")
         self.method_menu.grid(row=4, column=1, sticky="ew", padx=8)
         self.method_menu.config(width=16)
