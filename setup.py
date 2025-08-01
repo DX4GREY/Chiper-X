@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='chiper-x',
-    version='2.1.2',
+    version='2.1.3',
     description='File encryption (with pattern support)',
     author='Dx4Grey',
     author_email='dxablack@gmail.com',  # Ganti email kalau mau
