@@ -8,10 +8,10 @@ setup(
     author_email='dxablack@gmail.com',  # Ganti email kalau mau
     url='https://github.com/DX4GREY/chiper-x',  # Ganti URL repo kamu
     packages=find_packages(),
-    py_modules=['run'],  # Nama file utama lo, misal xor_tool.py
+    py_modules=['chiper_x'],  # Nama file utama lo, misal xor_tool.py
     entry_points={
         'console_scripts': [
-            'chiper-x=run:main',
+            'chiper-x=chiper_x:main',
         ],
     },
     install_requires=[
