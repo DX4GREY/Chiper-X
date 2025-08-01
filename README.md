@@ -1,4 +1,4 @@
-## 🔐 Chiper-X (by Dx4Grey)
+## 🔐 Chiper-X
 
 ## Description
 
@@ -19,7 +19,7 @@
 chiper-x [encrypt|decrypt] <input> [output] 
          [--key YOUR_KEY]
          [--method xor|aes|vigenere|rc4|vichaos]
-         [--pattern pattern.txt]
+         [--pattern test.pattern]
 ```
 
 > 🔹 `input` can be a **file or directory**
@@ -68,7 +68,7 @@ chiper-x encrypt file.txt file.enc --key mychaoskey --method vichaos
 
 ### Pattern-Based Encryption
 
-Given `pattern.txt`:
+Given `test.pattern`:
 
 ```
 superkey:AXVRC
@@ -77,13 +77,13 @@ superkey:AXVRC
 Encrypt with layered methods:
 
 ```
-chiper-x encrypt input.txt encrypted.bin --pattern pattern.txt
+chiper-x encrypt input.txt --pattern test.pattern
 ```
 
 And decrypt:
 
 ```
-chiper-x decrypt encrypted.bin --pattern pattern.txt
+chiper-x decrypt input.txt --pattern test.pattern
 ```
 
 ### Directory Encryption
@@ -113,9 +113,3 @@ Will encrypt all files and save to `myfolder/` (overwritten structure).
 ## Requirements
 
 * Python 3.6+
-
----
-
-## License
-
-MIT — free to use, modify, and share.
